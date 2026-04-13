@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ansafre — Reformas y Reparaciones en Madrid</title>
+  <meta name="description" content="Más de 15 años transformando hogares en Madrid. Reformas integrales, fontanería, electricidad y gestión de siniestros para particulares y seguros." />
+
+  <!-- Fonts: Playfair Display + Nunito + Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Nunito:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:       '#FAF8F3',
+            sand:        '#EDE7D9',
+            terracotta:  '#C96A2A',
+            'terra-dk':  '#A8551E',
+            sage:        '#7B8C65',
+            'sage-lt':   '#D4DDCA',
+            bark:        '#2D1B0E',
+            muted:       '#8B7355',
+            warm:        '#F0EAE0',
+          },
+          fontFamily: {
+            serif:  ['"Playfair Display"', 'Georgia', 'serif'],
+            sans:   ['Nunito', 'sans-serif'],
+            script: ['Caveat', 'cursive'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: #FAF8F3; color: #2D1B0E; overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    #navbar { transition: background 0.35s, box-shadow 0.35s; }
+    #navbar.scrolled {
+      background: rgba(250,248,243,0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(45,27,14,0.08);
+    }
+
+    /* ── HERO ── */
+    .hero-section {
+      background:
+        radial-gradient(ellipse 70% 80% at 100% 60%, rgba(201,106,42,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 60% at 0% 30%, rgba(123,140,101,0.15) 0%, transparent 50%),
+        linear-gradient(160deg, #FAF3E8 0%, #F5EDDB 40%, #EDE4CF 100%);
+    }
+
+    /* ── TEXTURE OVERLAY ── */
+    .texture::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C96A2A' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── PROJECT CARDS (simulated rooms) ── */
+    .proj-salon    { background: linear-gradient(135deg, #D4956A 0%, #B8763F 40%, #8B5E3C 100%); }
+    .proj-cocina   { background: linear-gradient(135deg, #E8D5A3 0%, #C9AA72 40%, #A08550 100%); }
+    .proj-bano     { background: linear-gradient(135deg, #A8C5C5 0%, #7BA5A5 40%, #5A8585 100%); }
+    .proj-dormit   { background: linear-gradient(135deg, #D4B8C8 0%, #B89AAA 40%, #8B7080 100%); }
+    .proj-fachada  { background: linear-gradient(135deg, #B8C4A0 0%, #94A87A 40%, #728560 100%); }
+    .proj-integral { background: linear-gradient(135deg, #C8A882 0%, #A88860 40%, #856845 100%); }
+
+    /* room SVG overlay */
+    .proj-card { position: relative; overflow: hidden; }
+    .proj-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(45,27,14,0.75) 0%, rgba(45,27,14,0.1) 60%, transparent 100%);
+    }
+    .proj-card:hover .proj-img { transform: scale(1.06); }
+    .proj-img { transition: transform 0.5s cubic-bezier(.22,.68,0,1.2); }
+
+    /* ── TESTIMONIAL ── */
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem;
+      line-height: 1;
+      color: #C96A2A;
+      opacity: 0.2;
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      z-index: 100;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.55);
+    }
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.3); }
+      50% { box-shadow: 0 6px 24px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.5s ease-in-out infinite; }
+
+    /* ── ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+
+    /* hero entrance */
+    @keyframes fadeUp { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: translateY(0); } }
+    .hero-anim-1 { animation: fadeUp 0.7s 0.1s ease both; }
+    .hero-anim-2 { animation: fadeUp 0.7s 0.25s ease both; }
+    .hero-anim-3 { animation: fadeUp 0.7s 0.4s ease both; }
+    .hero-anim-4 { animation: fadeUp 0.7s 0.55s ease both; }
+
+    /* counter */
+    .counter { font-variant-numeric: tabular-nums; }
+
+    /* mobile menu */
+    #mobile-menu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.35s ease; }
+    #mobile-menu.open { max-height: 500px; opacity: 1; }
+
+    /* underline decoration */
+    .deco-underline {
+      display: inline;
+      background-image: linear-gradient(90deg, #C96A2A, #A8551E);
+      background-repeat: no-repeat;
+      background-size: 100% 3px;
+      background-position: 0 100%;
+      padding-bottom: 2px;
+    }
+
+    /* specialty card */
+    .spec-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .spec-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(45,27,14,0.12); }
+
+    /* star fill */
+    .star { fill: #C96A2A; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ WHATSAPP FLOAT ═══════════════════════ -->
+<a href="https://wa.me/34641329637" target="_blank" rel="noopener noreferrer"
+   class="wa-float" aria-label="Contactar por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
+
+    <!-- Logo -->
+    <a href="#inicio" class="flex items-center gap-2.5 cursor-pointer" aria-label="Ansafre inicio">
+      <div class="w-9 h-9 rounded-xl bg-terracotta flex items-center justify-center flex-shrink-0 shadow-md">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="flex flex-col leading-none">
+        <span class="font-serif font-bold text-lg text-bark tracking-tight">ANSAFRE</span>
+        <span class="font-sans text-xs text-muted tracking-wide">Reformas · Madrid</span>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-8">
+      <li><a href="#servicios" class="text-bark/70 hover:text-terracotta font-sans font-600 text-sm transition-colors duration-200 cursor-pointer">Servicios</a></li>
+      <li><a href="#proyectos" class="text-bark/70 hover:text-terracotta font-sans font-600 text-sm transition-colors duration-200 cursor-pointer">Proyectos</a></li>
+      <li><a href="#nosotros" class="text-bark/70 hover:text-terracotta font-sans font-600 text-sm transition-colors duration-200 cursor-pointer">Nosotros</a></li>
+      <li><a href="#contacto" class="text-bark/70 hover:text-terracotta font-sans font-600 text-sm transition-colors duration-200 cursor-pointer">Contacto</a></li>
+    </ul>
+
+    <!-- CTA + hamburger -->
+    <div class="flex items-center gap-3">
+      <a href="tel:911697114"
+         class="hidden md:flex items-center gap-2 bg-terracotta hover:bg-terra-dk text-white font-sans font-semibold text-sm px-5 py-2.5 rounded-full transition-colors duration-200 cursor-pointer shadow-md shadow-terracotta/25">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        911 697 114
+      </a>
+      <button id="hamburger" class="md:hidden p-2 cursor-pointer text-bark" aria-label="Abrir menú" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-cream/98 backdrop-blur-md rounded-2xl mx-0 mb-2 border border-sand">
+    <ul class="flex flex-col px-6 py-4 gap-4">
+      <li><a href="#servicios"  class="mobile-link text-bark/80 hover:text-terracotta font-sans font-semibold transition-colors cursor-pointer block">Servicios</a></li>
+      <li><a href="#proyectos"  class="mobile-link text-bark/80 hover:text-terracotta font-sans font-semibold transition-colors cursor-pointer block">Proyectos</a></li>
+      <li><a href="#nosotros"   class="mobile-link text-bark/80 hover:text-terracotta font-sans font-semibold transition-colors cursor-pointer block">Nosotros</a></li>
+      <li><a href="#contacto"   class="mobile-link text-bark/80 hover:text-terracotta font-sans font-semibold transition-colors cursor-pointer block">Contacto</a></li>
+      <li><a href="tel:911697114" class="flex items-center justify-center gap-2 bg-terracotta text-white font-semibold px-4 py-2.5 rounded-full text-sm cursor-pointer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        911 697 114
+      </a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section id="inicio" class="relative texture min-h-screen flex items-center pt-20 overflow-hidden" style="background: radial-gradient(ellipse 70% 80% at 100% 60%, rgba(201,106,42,0.22) 0%, transparent 55%), radial-gradient(ellipse 60% 60% at 0% 30%, rgba(123,140,101,0.15) 0%, transparent 50%), linear-gradient(160deg, #FAF3E8 0%, #F5EDDB 40%, #EDE4CF 100%)">
+
+  <!-- Decorative blob -->
+  <div class="absolute top-20 right-0 w-[500px] h-[500px] rounded-full bg-terracotta/8 blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-sage/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full py-20 md:py-28">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Left -->
+      <div>
+        <span class="hero-anim-1 inline-block font-script text-terracotta text-xl mb-4">Tu hogar, nuestra pasión</span>
+        <h1 class="hero-anim-2 font-serif font-bold text-5xl md:text-6xl lg:text-7xl text-bark leading-tight mb-6">
+          Reformamos<br/>
+          <span class="deco-underline">cada rincón</span><br/>
+          de tu hogar
+        </h1>
+        <p class="hero-anim-3 font-sans text-muted text-lg leading-relaxed mb-8 max-w-lg">
+          Más de <strong class="text-bark">15 años</strong> transformando viviendas en Madrid. Fontanería, electricidad, albañilería, pintura y mucho más. Presupuesto gratuito en 24 horas.
+        </p>
+        <div class="hero-anim-4 flex flex-col sm:flex-row gap-4">
+          <a href="tel:911697114"
+             class="inline-flex items-center justify-center gap-2 bg-terracotta hover:bg-terra-dk text-white font-sans font-bold text-base px-7 py-3.5 rounded-full transition-colors duration-200 cursor-pointer shadow-lg shadow-terracotta/30">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Llamar ahora
+          </a>
+          <a href="#proyectos"
+             class="inline-flex items-center justify-center gap-2 bg-white/70 hover:bg-white border border-sand text-bark font-sans font-semibold text-base px-7 py-3.5 rounded-full transition-all duration-200 cursor-pointer">
+            Ver proyectos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: visual cards -->
+      <div class="grid grid-cols-2 gap-4 hero-anim-3">
+
+        <!-- Big card -->
+        <div class="col-span-2 proj-card proj-salon rounded-3xl h-52">
+          <div class="proj-img w-full h-full rounded-3xl relative">
+            <!-- Room silhouette SVG -->
+            <svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="20" y="100" width="120" height="80" fill="none" stroke="white" stroke-width="2" rx="4"/>
+              <rect x="160" y="60" width="80" height="120" fill="none" stroke="white" stroke-width="2" rx="4"/>
+              <rect x="260" y="80" width="120" height="100" fill="none" stroke="white" stroke-width="2" rx="4"/>
+              <line x1="20" y1="180" x2="380" y2="180" stroke="white" stroke-width="2"/>
+              <rect x="40" y="110" width="40" height="70" fill="white" opacity="0.15" rx="2"/>
+              <rect x="180" y="80" width="40" height="50" fill="white" opacity="0.15" rx="2"/>
+            </svg>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 z-10 p-5">
+            <span class="font-script text-white/80 text-sm">Reforma integral</span>
+            <p class="font-serif font-bold text-white text-lg leading-tight">Salón · Comedor · Cocina</p>
+          </div>
+        </div>
+
+        <!-- Small cards -->
+        <div class="proj-card proj-bano rounded-2xl h-36">
+          <div class="proj-img w-full h-full rounded-2xl"></div>
+          <div class="absolute bottom-0 left-0 right-0 z-10 p-4">
+            <p class="font-serif font-bold text-white text-sm">Baños</p>
+          </div>
+        </div>
+        <div class="proj-card proj-cocina rounded-2xl h-36">
+          <div class="proj-img w-full h-full rounded-2xl"></div>
+          <div class="absolute bottom-0 left-0 right-0 z-10 p-4">
+            <p class="font-serif font-bold text-white text-sm">Cocinas</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="absolute bottom-0 left-0 right-0" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FAF8F3"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<section class="py-14 px-4 md:px-8 bg-cream">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="reveal">
+        <p class="font-serif font-bold text-4xl text-terracotta counter" data-target="15">0</p>
+        <p class="font-sans text-muted text-sm mt-1">años de experiencia</p>
+      </div>
+      <div class="reveal reveal-d1">
+        <p class="font-serif font-bold text-4xl text-terracotta counter" data-target="2000">0</p>
+        <p class="font-sans text-muted text-sm mt-1">proyectos realizados</p>
+      </div>
+      <div class="reveal reveal-d2">
+        <p class="font-serif font-bold text-4xl text-terracotta">24h</p>
+        <p class="font-sans text-muted text-sm mt-1">servicio urgente</p>
+      </div>
+      <div class="reveal reveal-d3">
+        <p class="font-serif font-bold text-4xl text-terracotta">100%</p>
+        <p class="font-sans text-muted text-sm mt-1">garantía de obra</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ ESPECIALIDADES ═══════════════════════ -->
+<section id="servicios" class="py-24 px-4 md:px-8 bg-warm">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 reveal">
+      <span class="font-script text-terracotta text-xl block mb-2">Lo que sabemos hacer</span>
+      <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark leading-tight">
+        Todos los oficios,<br/>un solo equipo
+      </h2>
+      <p class="font-sans text-muted text-lg mt-4 max-w-xl mx-auto leading-relaxed">
+        Equipo propio con profesionales de cada especialidad. Sin subcontrataciones, con control total de calidad.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+
+      <!-- Albañilería -->
+      <div class="spec-card reveal reveal-d1 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            <path d="M7 7h.01M12 7h.01M17 7h.01M7 11h.01M12 11h.01M17 11h.01"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Albañilería</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Tabiques, alicatados, solados y acabados</p>
+      </div>
+
+      <!-- Fontanería -->
+      <div class="spec-card reveal reveal-d2 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/>
+            <path d="M12 2v10l4.5 4.5"/><circle cx="19" cy="5" r="3"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Fontanería</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Instalaciones, averías y renovaciones</p>
+      </div>
+
+      <!-- Electricidad -->
+      <div class="spec-card reveal reveal-d3 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Electricidad</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Cuadros, instalaciones y certificaciones</p>
+      </div>
+
+      <!-- Pintura -->
+      <div class="spec-card reveal reveal-d4 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z"/>
+            <path d="M12 11V2"/><path d="M8 6l4-4 4 4"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Pintura</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Interior, exterior y técnicas decorativas</p>
+      </div>
+
+      <!-- Carpintería -->
+      <div class="spec-card reveal reveal-d1 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Carpintería</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Puertas, armarios, tarimas y ventanas</p>
+      </div>
+
+      <!-- Climatización -->
+      <div class="spec-card reveal reveal-d2 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2v20M4.93 4.93l14.14 14.14M2 12h20M4.93 19.07l14.14-14.14"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Climatización</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Aire acondicionado, calefacción y suelo radiante</p>
+      </div>
+
+      <!-- Demoliciones -->
+      <div class="spec-card reveal reveal-d3 bg-white rounded-2xl p-6 text-center border border-sand cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-bark text-base mb-1">Demoliciones</h3>
+        <p class="font-sans text-muted text-xs leading-relaxed">Derribo selectivo, gestión de escombros</p>
+      </div>
+
+      <!-- Seguros -->
+      <div class="spec-card reveal reveal-d4 bg-terracotta rounded-2xl p-6 text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-4">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif font-bold text-white text-base mb-1">Seguros</h3>
+        <p class="font-sans text-white/80 text-xs leading-relaxed">Gestión de siniestros y coordinación con aseguradoras</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ GALERÍA DE PROYECTOS ═══════════════════════ -->
+<section id="proyectos" class="py-24 px-4 md:px-8 bg-cream">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal">
+      <div>
+        <span class="font-script text-terracotta text-xl block mb-2">Nuestro trabajo</span>
+        <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark leading-tight">
+          Proyectos que<br/><span class="deco-underline">hablan por sí solos</span>
+        </h2>
+      </div>
+      <a href="#contacto" class="inline-flex items-center gap-2 bg-terracotta hover:bg-terra-dk text-white font-sans font-semibold text-sm px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer flex-shrink-0">
+        Pide tu presupuesto
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <!-- Masonry-style grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Proyecto 1 -->
+      <div class="proj-card reveal reveal-d1 rounded-3xl overflow-hidden h-72 cursor-pointer">
+        <div class="proj-img proj-salon w-full h-full flex items-center justify-center">
+          <svg viewBox="0 0 300 200" class="w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="60" width="130" height="120" fill="none" stroke="white" stroke-width="2" rx="6"/>
+            <rect x="160" y="40" width="130" height="140" fill="none" stroke="white" stroke-width="2" rx="6"/>
+            <rect x="20" y="80" width="50" height="70" fill="white" opacity="0.2" rx="3"/>
+            <rect x="30" y="90" width="30" height="50" fill="white" opacity="0.15" rx="2"/>
+            <rect x="180" y="60" width="90" height="80" fill="white" opacity="0.15" rx="3"/>
+            <rect x="190" y="70" width="70" height="60" fill="white" opacity="0.1" rx="2"/>
+            <line x1="10" y1="180" x2="290" y2="180" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-6">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-sans font-semibold px-2.5 py-1 rounded-full mb-2">Reforma integral</span>
+          <h3 class="font-serif font-bold text-white text-xl">Salón · Comedor</h3>
+          <p class="font-sans text-white/70 text-sm">Pinto, Madrid</p>
+        </div>
+      </div>
+
+      <!-- Proyecto 2 -->
+      <div class="proj-card reveal reveal-d2 rounded-3xl overflow-hidden h-72 cursor-pointer">
+        <div class="proj-img proj-bano w-full h-full flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="20" y="20" width="160" height="160" fill="none" stroke="white" stroke-width="2" rx="8"/>
+            <rect x="30" y="30" width="140" height="40" fill="white" opacity="0.15" rx="4"/>
+            <ellipse cx="100" cy="130" rx="50" ry="35" fill="none" stroke="white" stroke-width="2"/>
+            <rect x="80" y="80" width="40" height="20" fill="white" opacity="0.2" rx="3"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-6">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-sans font-semibold px-2.5 py-1 rounded-full mb-2">Baño completo</span>
+          <h3 class="font-serif font-bold text-white text-xl">Baño principal</h3>
+          <p class="font-sans text-white/70 text-sm">Getafe, Madrid</p>
+        </div>
+      </div>
+
+      <!-- Proyecto 3 -->
+      <div class="proj-card reveal reveal-d3 rounded-3xl overflow-hidden h-72 cursor-pointer">
+        <div class="proj-img proj-cocina w-full h-full flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full opacity-30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="50" width="180" height="130" fill="none" stroke="white" stroke-width="2" rx="6"/>
+            <rect x="20" y="60" width="80" height="50" fill="white" opacity="0.2" rx="4"/>
+            <rect x="110" y="60" width="70" height="50" fill="white" opacity="0.15" rx="4"/>
+            <rect x="20" y="120" width="160" height="50" fill="white" opacity="0.1" rx="4"/>
+            <circle cx="55" cy="40" r="12" fill="none" stroke="white" stroke-width="2"/>
+            <circle cx="100" cy="40" r="12" fill="none" stroke="white" stroke-width="2"/>
+            <circle cx="145" cy="40" r="12" fill="none" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-6">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-sans font-semibold px-2.5 py-1 rounded-full mb-2">Cocina nueva</span>
+          <h3 class="font-serif font-bold text-white text-xl">Cocina americana</h3>
+          <p class="font-sans text-white/70 text-sm">Parla, Madrid</p>
+        </div>
+      </div>
+
+      <!-- Proyecto 4 -->
+      <div class="proj-card reveal reveal-d1 rounded-3xl overflow-hidden h-56 cursor-pointer">
+        <div class="proj-img proj-dormit w-full h-full"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-5">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-sans font-semibold px-2.5 py-1 rounded-full mb-2">Dormitorio</span>
+          <h3 class="font-serif font-bold text-white text-lg">Suite principal</h3>
+        </div>
+      </div>
+
+      <!-- Proyecto 5 -->
+      <div class="proj-card reveal reveal-d2 rounded-3xl overflow-hidden h-56 cursor-pointer">
+        <div class="proj-img proj-fachada w-full h-full"></div>
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-5">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-sans font-semibold px-2.5 py-1 rounded-full mb-2">Exterior</span>
+          <h3 class="font-serif font-bold text-white text-lg">Fachada y jardín</h3>
+        </div>
+      </div>
+
+      <!-- Proyecto 6 CTA -->
+      <div class="reveal reveal-d3 rounded-3xl bg-sand border-2 border-dashed border-terracotta/30 h-56 flex flex-col items-center justify-center text-center p-6 cursor-pointer hover:bg-terracotta/5 transition-colors duration-200">
+        <div class="w-12 h-12 rounded-full bg-terracotta/15 flex items-center justify-center mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <p class="font-serif font-bold text-bark text-lg mb-1">¿El próximo<br/>es el tuyo?</p>
+        <a href="#contacto" class="font-sans text-terracotta font-semibold text-sm hover:underline cursor-pointer">Solicita presupuesto</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ NOSOTROS / WHY ═══════════════════════ -->
+<section id="nosotros" class="py-24 px-4 md:px-8" style="background: linear-gradient(160deg, #EDE7D9 0%, #E0D5C4 100%)">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Left -->
+      <div class="reveal">
+        <span class="font-script text-terracotta text-xl block mb-2">Por qué elegirnos</span>
+        <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark leading-tight mb-6">
+          Profesionales con<br/><span class="deco-underline">alma de artesano</span>
+        </h2>
+        <p class="font-sans text-muted text-lg leading-relaxed mb-6">
+          Somos <strong class="text-bark">ANSAFRE FONTANEROS, S.L.</strong>, con sede en Pinto (Madrid). Llevamos más de 15 años haciendo que las casas de nuestros clientes sean mejores lugares para vivir.
+        </p>
+        <p class="font-sans text-muted text-base leading-relaxed mb-10">
+          Nuestro equipo propio — sin subcontratas — garantiza calidad en cada fase del proyecto: desde el primer presupuesto hasta la última mano de pintura.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-terracotta/15 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="font-sans text-bark text-base font-medium">Presupuesto gratuito y sin compromiso</span>
+          </li>
+          <li class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-terracotta/15 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="font-sans text-bark text-base font-medium">Equipo propio en todas las especialidades</span>
+          </li>
+          <li class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-terracotta/15 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="font-sans text-bark text-base font-medium">Colaboramos con las principales aseguradoras</span>
+          </li>
+          <li class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-terracotta/15 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="font-sans text-bark text-base font-medium">Urgencias disponibles 24 horas, 7 días</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right -->
+      <div class="grid grid-cols-2 gap-4 reveal reveal-d2">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-sand/50">
+          <div class="w-10 h-10 rounded-xl bg-terracotta/10 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <p class="font-serif font-bold text-bark text-2xl">15+</p>
+          <p class="font-sans text-muted text-sm mt-1">Años de trayectoria</p>
+        </div>
+        <div class="bg-terracotta rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p class="font-serif font-bold text-white text-2xl">Equipo<br/>propio</p>
+          <p class="font-sans text-white/70 text-sm mt-1">Sin subcontratas</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-sand/50 col-span-2">
+          <div class="flex items-start gap-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" class="flex-shrink-0 mt-0.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <p class="font-serif font-bold text-bark text-base">C/ Bélgica, 17</p>
+              <p class="font-sans text-muted text-sm">28320 Pinto, Madrid</p>
+            </div>
+            <a href="tel:911697114" class="ml-auto flex-shrink-0 flex items-center gap-1.5 bg-terracotta/10 hover:bg-terracotta hover:text-white text-terracotta font-sans font-semibold text-sm px-4 py-2 rounded-full transition-all duration-200 cursor-pointer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Llamar
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ TESTIMONIOS ═══════════════════════ -->
+<section class="py-24 px-4 md:px-8 bg-cream">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 reveal">
+      <span class="font-script text-terracotta text-xl block mb-2">Opiniones reales</span>
+      <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark leading-tight">
+        Lo que dicen<br/>nuestros clientes
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Testimonio 1 -->
+      <div class="reveal reveal-d1 relative bg-white rounded-3xl p-7 border border-sand shadow-sm">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <div class="flex gap-1 mb-4">
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="font-sans text-muted text-sm leading-relaxed mb-6">
+          "Reformaron todo el baño en una semana. Limpieza impecable, puntualidad total y el resultado es espectacular. Muy recomendables."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-terracotta/20 flex items-center justify-center font-serif font-bold text-terracotta text-base">M</div>
+          <div>
+            <p class="font-sans font-bold text-bark text-sm">María G.</p>
+            <p class="font-sans text-muted text-xs">Pinto, Madrid</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="reveal reveal-d2 relative bg-white rounded-3xl p-7 border border-sand shadow-sm">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <div class="flex gap-1 mb-4">
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="font-sans text-muted text-sm leading-relaxed mb-6">
+          "Tuve una fuga de agua un domingo. Vinieron en menos de 2 horas y lo solucionaron. Profesionales, atentos y con talento."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-sage/30 flex items-center justify-center font-serif font-bold text-sage text-base">J</div>
+          <div>
+            <p class="font-sans font-bold text-bark text-sm">Juan A.</p>
+            <p class="font-sans text-muted text-xs">Getafe, Madrid</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="reveal reveal-d3 relative bg-terracotta rounded-3xl p-7">
+        <div class="font-serif text-6xl text-white/20 absolute top-2 left-4 leading-none" aria-hidden="true">"</div>
+        <div class="flex gap-1 mb-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="font-sans text-white/90 text-sm leading-relaxed mb-6">
+          "Reforma integral del piso: cocina, baños y salón. El resultado superó nuestras expectativas. Gestión perfecta de principio a fin."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-white/25 flex items-center justify-center font-serif font-bold text-white text-base">C</div>
+          <div>
+            <p class="font-sans font-bold text-white text-sm">Carmen R.</p>
+            <p class="font-sans text-white/60 text-xs">Parla, Madrid</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 4 -->
+      <div class="reveal reveal-d4 relative bg-white rounded-3xl p-7 border border-sand shadow-sm">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <div class="flex gap-1 mb-4">
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="font-sans text-muted text-sm leading-relaxed mb-6">
+          "Mi seguro me los recomendó para un siniestro. Hicieron la gestión completa sin que yo tuviera que hacer nada. Diez de diez."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-bark/10 flex items-center justify-center font-serif font-bold text-bark text-base">A</div>
+          <div>
+            <p class="font-sans font-bold text-bark text-sm">Antonio M.</p>
+            <p class="font-sans text-muted text-xs">Valdemoro, Madrid</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ PROCESO ═══════════════════════ -->
+<section class="py-24 px-4 md:px-8 bg-warm">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-script text-terracotta text-xl block mb-2">Sin complicaciones</span>
+      <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark">Así trabajamos</h2>
+    </div>
+    <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-terracotta via-terracotta/50 to-sage z-0" aria-hidden="true"></div>
+
+      <div class="relative z-10 text-center reveal reveal-d1">
+        <div class="w-16 h-16 rounded-full bg-terracotta flex items-center justify-center mx-auto mb-6 shadow-lg shadow-terracotta/25">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <span class="font-script text-terracotta text-lg">01</span>
+        <h3 class="font-serif font-bold text-bark text-lg mt-1 mb-2">Contacta</h3>
+        <p class="font-sans text-muted text-sm leading-relaxed">Llámanos o escríbenos y te atendemos de inmediato.</p>
+      </div>
+      <div class="relative z-10 text-center reveal reveal-d2">
+        <div class="w-16 h-16 rounded-full bg-terracotta/80 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-terracotta/20">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <span class="font-script text-terracotta text-lg">02</span>
+        <h3 class="font-serif font-bold text-bark text-lg mt-1 mb-2">Presupuesto</h3>
+        <p class="font-sans text-muted text-sm leading-relaxed">Visita gratuita y presupuesto detallado sin compromiso.</p>
+      </div>
+      <div class="relative z-10 text-center reveal reveal-d3">
+        <div class="w-16 h-16 rounded-full bg-sage flex items-center justify-center mx-auto mb-6 shadow-lg shadow-sage/25">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <span class="font-script text-sage text-lg">03</span>
+        <h3 class="font-serif font-bold text-bark text-lg mt-1 mb-2">Ejecutamos</h3>
+        <p class="font-sans text-muted text-sm leading-relaxed">Tu equipo trabaja con materiales de calidad y en plazo.</p>
+      </div>
+      <div class="relative z-10 text-center reveal reveal-d4">
+        <div class="w-16 h-16 rounded-full bg-sage/80 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-sage/20">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="font-script text-sage text-lg">04</span>
+        <h3 class="font-serif font-bold text-bark text-lg mt-1 mb-2">Garantía</h3>
+        <p class="font-sans text-muted text-sm leading-relaxed">Revisión final y garantía por escrito en todos los trabajos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ CONTACTO ═══════════════════════ -->
+<section id="contacto" class="py-24 px-4 md:px-8 bg-cream">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+
+      <!-- Left -->
+      <div class="reveal">
+        <span class="font-script text-terracotta text-xl block mb-2">Hablemos</span>
+        <h2 class="font-serif font-bold text-4xl md:text-5xl text-bark leading-tight mb-6">
+          Cuéntanos<br/>qué necesitas
+        </h2>
+        <p class="font-sans text-muted text-lg leading-relaxed mb-10">
+          Presupuesto gratuito en 24 horas. Sin compromisos, sin letra pequeña. Solo soluciones para tu hogar.
+        </p>
+
+        <div class="space-y-5">
+          <a href="tel:911697114" class="flex items-center gap-4 group cursor-pointer">
+            <div class="w-12 h-12 rounded-2xl bg-terracotta/10 group-hover:bg-terracotta flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" class="group-hover:stroke-white transition-colors" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <p class="font-sans font-bold text-bark text-base group-hover:text-terracotta transition-colors">911 697 114</p>
+              <p class="font-sans text-muted text-sm">Urgencias disponibles 24h</p>
+            </div>
+          </a>
+          <a href="mailto:ansafresl@telefonica.net" class="flex items-center gap-4 group cursor-pointer">
+            <div class="w-12 h-12 rounded-2xl bg-terracotta/10 group-hover:bg-terracotta flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" class="group-hover:stroke-white transition-colors" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <p class="font-sans font-bold text-bark text-base group-hover:text-terracotta transition-colors">ansafresl@telefonica.net</p>
+              <p class="font-sans text-muted text-sm">Respuesta en menos de 24h</p>
+            </div>
+          </a>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C96A2A" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <p class="font-sans font-bold text-bark text-base">C/ Bélgica, 17 — Pinto, Madrid</p>
+              <p class="font-sans text-muted text-sm">28320 Madrid y alrededores</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="reveal reveal-d2 bg-white rounded-3xl p-8 border border-sand shadow-sm">
+        <h3 class="font-serif font-bold text-2xl text-bark mb-6">Solicita presupuesto gratuito</h3>
+        <form id="contact-form" novalidate>
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="nombre" class="block font-sans text-sm font-semibold text-bark/80 mb-1.5">Nombre <span class="text-terracotta" aria-hidden="true">*</span></label>
+              <input type="text" id="nombre" name="nombre" required autocomplete="name"
+                     class="w-full border border-sand rounded-xl px-4 py-3 font-sans text-bark text-sm focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors"
+                     placeholder="Tu nombre" />
+            </div>
+            <div>
+              <label for="telefono" class="block font-sans text-sm font-semibold text-bark/80 mb-1.5">Teléfono <span class="text-terracotta" aria-hidden="true">*</span></label>
+              <input type="tel" id="telefono" name="telefono" required autocomplete="tel"
+                     class="w-full border border-sand rounded-xl px-4 py-3 font-sans text-bark text-sm focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors"
+                     placeholder="600 000 000" />
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="servicio" class="block font-sans text-sm font-semibold text-bark/80 mb-1.5">Tipo de servicio</label>
+            <select id="servicio" name="servicio"
+                    class="w-full border border-sand rounded-xl px-4 py-3 font-sans text-bark text-sm focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors cursor-pointer bg-white">
+              <option value="">Selecciona un servicio...</option>
+              <option>Reforma integral</option>
+              <option>Fontanería</option>
+              <option>Electricidad</option>
+              <option>Albañilería</option>
+              <option>Pintura</option>
+              <option>Urgencia 24h</option>
+              <option>Gestión de siniestros</option>
+              <option>Compañía de seguros</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="mb-6">
+            <label for="mensaje" class="block font-sans text-sm font-semibold text-bark/80 mb-1.5">¿Qué necesitas?</label>
+            <textarea id="mensaje" name="mensaje" rows="4" resize="none"
+                      class="w-full border border-sand rounded-xl px-4 py-3 font-sans text-bark text-sm focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors resize-none"
+                      placeholder="Cuéntanos tu proyecto o avería..."></textarea>
+          </div>
+          <button type="submit"
+                  class="w-full bg-terracotta hover:bg-terra-dk text-white font-sans font-bold text-base py-3.5 rounded-xl transition-colors duration-200 cursor-pointer flex items-center justify-center gap-2">
+            Enviar solicitud
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <div id="form-success" class="hidden mt-4 bg-green-50 border border-green-200 text-green-700 rounded-xl px-4 py-3 font-sans text-sm text-center" role="alert">
+            ¡Gracias! Nos pondremos en contacto contigo muy pronto.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer style="background: #2D1B0E" class="py-14 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-terracotta flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <p class="font-serif font-bold text-lg text-white">ANSAFRE</p>
+            <p class="font-sans text-xs text-white/40">Reformas · Madrid</p>
+          </div>
+        </div>
+        <p class="font-sans text-white/40 text-sm leading-relaxed">Empresa de reformas y reparaciones multiservicio en Madrid. Más de 15 años transformando hogares.</p>
+      </div>
+      <div>
+        <h4 class="font-sans font-bold text-white/60 text-xs tracking-widest uppercase mb-4">Servicios</h4>
+        <ul class="space-y-2">
+          <li><a href="#servicios" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer">Reformas integrales</a></li>
+          <li><a href="#servicios" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer">Fontanería y electricidad</a></li>
+          <li><a href="#servicios" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer">Urgencias 24h</a></li>
+          <li><a href="#servicios" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer">Gestión de siniestros</a></li>
+          <li><a href="#servicios" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer">Administraciones de fincas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-sans font-bold text-white/60 text-xs tracking-widest uppercase mb-4">Contacto</h4>
+        <ul class="space-y-3">
+          <li><a href="tel:911697114" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer flex items-center gap-2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            911 697 114
+          </a></li>
+          <li><a href="mailto:ansafresl@telefonica.net" class="font-sans text-white/40 hover:text-white text-sm transition-colors cursor-pointer flex items-center gap-2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            ansafresl@telefonica.net
+          </a></li>
+          <li class="font-sans text-white/40 text-sm flex items-start gap-2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="mt-0.5 flex-shrink-0" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            C/ Bélgica, 17 · Pinto, Madrid
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-sans text-white/20 text-xs">© 2024 ANSAFRE FONTANEROS, S.L. Todos los derechos reservados.</p>
+      <p class="font-sans text-white/15 text-xs">Diseño web profesional · Madrid</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════ JAVASCRIPT ═══════════════════════ -->
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Counters
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const dur = 1800, step = 16;
+    let cur = 0;
+    const inc = target / (dur / step);
+    const t = setInterval(() => {
+      cur = Math.min(cur + inc, target);
+      el.textContent = Math.floor(cur).toLocaleString('es-ES') + '+';
+      if (cur >= target) clearInterval(t);
+    }, step);
+  }
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // Form
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const tel    = document.getElementById('telefono').value.trim();
+    if (!nombre || !tel) { alert('Por favor completa nombre y teléfono.'); return; }
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    setTimeout(() => {
+      document.getElementById('form-success').classList.remove('hidden');
+      this.reset(); btn.disabled = false;
+      btn.innerHTML = 'Enviar solicitud <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+    }, 1200);
+  });
+</script>
+</body>
+</html>
